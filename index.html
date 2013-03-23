@@ -46,11 +46,11 @@
 <script>
 	$(function() {
 		var numParticles = 200;
-		
+
 		// Override particle number if URL contains the desired number
-		var urlNumber = parseInt(window.location.href.substring(window.location.href.indexOf('?') + 1));
+		var urlNumber = parseInt(window.location.href.substring(window.location.href.lastIndexOf('?') + 1));
 		
-		if (!isNaN(urlBumber)) {
+		if (!isNaN(urlNumber)) {
 			numParticles = urlNumber;
 		}
 
