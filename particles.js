@@ -12,7 +12,7 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 */
 
-(function (ParticleCloud, $, undefined) {
+(function (ParticleCloud, $, Vec2, undefined) {
 	var mycanvas, context, well, vec, particlearray;
 
 	var numParticles = 200;
@@ -22,10 +22,10 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 	var det = 1.2;
 
 	function Particle(px, py, psize, pid, pcolour) {
-		this.size = psize;
-		this.id = pid;
+	this.size = psize;
+	this.id = pid;
     this.pos = Vec2.new(px, py);
-		this.v = 0;
+	this.v = 0;
   	this.colour = pcolour;
   	this.dir = 0;
   	this.ddir = 0;
@@ -46,34 +46,34 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 	}
 
 	function moveParticle(p) {
-    vec[0] = well[0] - p.pos[0];
-    vec[1] = well[1] - p.pos[1];
-    var distance = vec.len();
+	    vec[0] = well[0] - p.pos[0];
+	    vec[1] = well[1] - p.pos[1];
+	    var distance = vec.len();
 
 		p.dir = vec.rad();
 
-    if (distance < 5) {
-    	p.v = -5;
-    } else if (distance <= wellRadius) {
-    	p.v -= det;
-    	p.dir += Math.cos(p.id);
-    } else if (distance > wellRadius) {
-    	p.dir -= Math.sin(p.id);
-    	if (p.v < vmax) p.v += atr;
-    }
+	    if (distance < 5) {
+	    	p.v = -5;
+	    } else if (distance <= wellRadius) {
+	    	p.v -= det;
+	    	p.dir += Math.cos(p.id);
+	    } else if (distance > wellRadius) {
+	    	p.dir -= Math.sin(p.id);
+	    	if (p.v < vmax) p.v += atr;
+	    }
 
-    p.pos[0] += Math.cos(p.dir) * p.v * (p.size/8);
+	    p.pos[0] += Math.cos(p.dir) * p.v * (p.size/8);
 		p.pos[1] += Math.sin(p.dir) * p.v * (p.size/8);
 	}
 
 	ParticleCloud.drawFrame = function() {
-    context.clearRect(0, 0, mycanvas.width, mycanvas.height);
+	    context.clearRect(0, 0, mycanvas.width, mycanvas.height);
 
-    var i = numParticles;
-    while(i--) {
-			moveParticle(particlearray[i]);
-			drawParticle(particlearray[i]);
-		}
+	    var i = numParticles;
+	    while(i--) {
+				moveParticle(particlearray[i]);
+				drawParticle(particlearray[i]);
+			}
 	}
 
 	ParticleCloud.init = function(canvasID, numberOfParticles) {
@@ -87,16 +87,16 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 		resizeCanvas();
 
-    well = Vec2.new(mycanvas.width/2, mycanvas.height/2);
-    vec = Vec2.new();
+	    well = Vec2.new(mycanvas.width/2, mycanvas.height/2);
+	    vec = Vec2.new();
 
-    var i = numParticles;
-    while(i--) {
+	    var i = numParticles;
+	    while(i--) {
 			randsize = 5 + Math.floor(Math.random()*5);
 			randx = Math.floor(Math.random()*(mycanvas.width-randsize));
 			randy = Math.floor(Math.random()*(mycanvas.height-randsize));
 			colour = rgbToHex(Math.floor(Math.random()*255), Math.floor(Math.random()*255), Math.floor(Math.random()*255));
-			particlearray[i] = new Particle(randx,randy,randsize,i,colour);
+			particlearray[i] = new Particle(randx, randy, randsize, i, colour);
 		}
 
 		$(window).resize(resizeCanvas);
@@ -137,11 +137,11 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 		well[1] = event.touches[0].pageY;
 	}
 
-  function componentToHex(c) {
-    var hex = c.toString(16);
-    return hex.length == 1 ? "0" + hex : hex;
-  }
-  function rgbToHex(r, g, b) {
-    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-  }
-})(window.ParticleCloud = window.ParticleCloud || {}, jQuery);
+	function componentToHex(c) {
+		var hex = c.toString(16);
+		return hex.length == 1 ? "0" + hex : hex;
+	}
+	function rgbToHex(r, g, b) {
+		return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+	}
+})(window.ParticleCloud = window.ParticleCloud || {}, jQuery, Vec2);
