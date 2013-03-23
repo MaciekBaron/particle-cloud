@@ -8,141 +8,54 @@
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
 </head> 
-<body onload="init();" onorientationchange="resize_canvas();"> 
+<body onorientationchange="resizeCanvas();"> 
 <canvas id="mycanvas"></canvas> 
-<script> 
-var mycanvas = document.getElementById('mycanvas');
-var context = mycanvas.getContext('2d');
+<script>
+// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+// http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
  
+// requestAnimationFrame polyfill by Erik Möller
+// fixes from Paul Irish and Tino Zijdel
  
-var numParticles = 200;
-var wellX, wellY;
-var wellRadius = 120;
-var atr = 0.9;
-var vmax = 20;
-var det = 1.2;
- 
-var particlearray = new Array(numParticles);
- 
-function particle(px, py, psize, pid, pcolour) {
-	this.size = psize;
-	this.id = pid;
-	this.x = px;
-	this.y = py;
-	this.v = 0;
-  	this.colour = pcolour;
-  	this.dir = 0;
-  	this.ddir = 0;
-  	this.dirc = 0;
-}
- 
-function draw_particle(p) {
-	context.fillStyle = p.colour;
-	context.beginPath();
-	context.arc(p.x,p.y,p.size,0,Math.PI*2,true);
-	context.closePath();
-	context.fill();
-}
- 
-function resize_canvas() {
-	mycanvas.width = window.innerWidth;
-	mycanvas.height = window.innerHeight;
-}
- 
-function move_particle(p) {
-    
-    var dx = wellX - p.x;
-	var dy = wellY - p.y;
-	var distance = Math.sqrt(dx*dx + dy*dy);
-	
-	var proportions = Math.abs(dx/dy);
-		
-	p.dir = Math.atan2(wellY-p.y,wellX-p.x);
-    
-    if (distance < 5) {
-    	p.v = -5;
-    } else if (distance <= wellRadius) {
-    	// Detract
-    	p.v -= det;
-    	p.dir += Math.cos(p.id);
-    } else if (distance > wellRadius) {
-    	p.dir -= Math.sin(p.id);
-    	if (p.v < vmax) p.v += atr;
+(function() {
+    var lastTime = 0;
+    var vendors = ['ms', 'moz', 'webkit', 'o'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] 
+                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
     }
-    
-    p.x += Math.cos(p.dir)*p.v*(p.size/8);
-	p.y += Math.sin(p.dir)*p.v*(p.size/8);
-}
  
-function draw_frame() {
-	context.fillStyle = "rgb(225,225,225)";
-	context.fillRect(0, 0, mycanvas.width, mycanvas.height);
-	
-	for (var i=0; i < numParticles; i++) {
-		draw_particle(particlearray[i]);
-		move_particle(particlearray[i]);
-	}
-}
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
+              timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
  
-function init() {
- 
-	var pnumber = parseInt(window.location.href.substring(window.location.href.indexOf("?") + 1));
-	
-	if (typeof pnumber != NaN) {
-		numParticles = pnumber;
-	}
-	
-	resize_canvas();
-	
-	wellX = mycanvas.width/2;
-	wellY = mycanvas.height/2;
-	
-	for (var i=0; i < numParticles; i++) {
-		randsize = 5 + Math.floor(Math.random()*5);
-		randx = Math.floor(Math.random()*(mycanvas.width-randsize));
-		randy = Math.floor(Math.random()*(mycanvas.height-randsize));
-		colour = "rgb(" + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + ")";
-		particlearray[i] = new particle(randx,randy,randsize,i,colour);
-	}
-	
-	$(window).resize(function() {
-		resize_canvas();
-	});
-	
-	$(window).mousemove(function(event){
-		wellX = event.clientX;
-		wellY = event.clientY;
-	});
-	
-	$(window).mousedown(function(event){
-		wellRadius += 100;
-		det *= 3;
-	});
-	
-	$(window).mouseup(function(event){
-		wellRadius -= 100;
-		det /= 3;
-	});
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+}());
+</script>
+<script src="particles.js"></script>
+<script>
+	$(function() {
+		var numParticles = 200;
+		
+		// Override particle number if URL contains the desired number
+		var urlNumber = parseInt(window.location.href.substring(window.location.href.indexOf('?') + 1));
+		
+		if (!isNaN(urlBumber)) {
+			numParticles = urlNumber;
+		}
 
-	mycanvas.addEventListener("touchstart", touchStart, false);
-	mycanvas.addEventListener("touchmove", touchMove, false);
-	
-	
-	draw_frame();
-	
-	setInterval("draw_frame();", 30);
-	
-}
-
-function touchStart(event) {
-	event.preventDefault();
-}
-
-function touchMove(event) {
-	event.preventDefault();
-	wellX = event.touches[0].pageX;
-	wellY = event.touches[0].pageY;
-}
-</script> 
+		ParticleCloud.init("mycanvas", numParticles);
+	});
+</script>
 </body> 
 </html>
