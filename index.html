@@ -1,55 +1,56 @@
 
-<html> 
-<head> 
-<style> 
+<html>
+<head>
+<style>
 	*{ margin: 0; padding: 0; }
 	body { background-color: #E1E1E1; }
-</style> 
+</style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
-</head> 
-<body onorientationchange="resizeCanvas();"> 
-<canvas id="mycanvas"></canvas> 
+</head>
+<body onorientationchange="resizeCanvas();">
+<canvas id="mycanvas"></canvas>
 <script>
 // http://paulirish.com/2011/requestanimationframe-for-smart-animating/
 // http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
- 
+
 // requestAnimationFrame polyfill by Erik Möller
 // fixes from Paul Irish and Tino Zijdel
- 
+
 (function() {
     var lastTime = 0;
     var vendors = ['ms', 'moz', 'webkit', 'o'];
     for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
         window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] 
+        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
                                    || window[vendors[x]+'CancelRequestAnimationFrame'];
     }
- 
+
     if (!window.requestAnimationFrame)
         window.requestAnimationFrame = function(callback, element) {
             var currTime = new Date().getTime();
             var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); },
               timeToCall);
             lastTime = currTime + timeToCall;
             return id;
         };
- 
+
     if (!window.cancelAnimationFrame)
         window.cancelAnimationFrame = function(id) {
             clearTimeout(id);
         };
 }());
 </script>
+<script src="math.js"></script>
 <script src="particles.js"></script>
 <script>
 	$(function() {
-		var numParticles = 200;
+		var numParticles = 1000;
 
 		// Override particle number if URL contains the desired number
 		var urlNumber = parseInt(window.location.href.substring(window.location.href.lastIndexOf('?') + 1));
-		
+
 		if (!isNaN(urlNumber)) {
 			numParticles = urlNumber;
 		}
@@ -57,5 +58,5 @@
 		ParticleCloud.init("mycanvas", numParticles);
 	});
 </script>
-</body> 
+</body>
 </html>
