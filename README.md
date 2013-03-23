@@ -1,7 +1,7 @@
 Particle Cloud
 ==============
 
-This is a "semi-orbital" particle cloud animation that I've created around three years ago (2010) but have know 
+This is a "semi-orbital" particle cloud animation that I've created around three years ago (2010) but have now 
 updated and optimized to use `requestAnimationFrame` etc.. It's a Canvas based animation that uses I wrote from 
 scratch without using any libraries (except jQuery, but it can be easilly rewritten to not require it).
 
