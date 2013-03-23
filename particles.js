@@ -50,8 +50,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 	    var dx = wellX - p.x;
 		var dy = wellY - p.y;
 		var distance = Math.sqrt(dx*dx + dy*dy);
-		
-		var proportions = Math.abs(dx/dy);
 			
 		p.dir = Math.atan2(wellY-p.y,wellX-p.x);
 	    
