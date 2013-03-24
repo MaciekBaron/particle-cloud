@@ -8,8 +8,19 @@ scratch without using any libraries (except jQuery, but it can be easilly rewrit
 The particles are randomly generated during the initialization stage (colour, size etc.) and then are non-randomly 
 animated using quasi-physics that actually aren't similar to anything in real life.
 
+Quasi-physics
+-------------
+
+The idea behind the "physics" over here is creating a "magnetic well" that attracts particles, and then repels them 
+once they reach the "well". The particles accelerate until they reach their maximum velocity or until they reach the 
+well. After reaching the well, they start deaccelerating based on the value of detraction set in the script. The 
+particles do not travel to the well using a straight line - their path is actually curved in order to achieve a more 
+interesting effect.
+
+The smaller particles travel slower which creates an illusion of 3D.
+
 Demo
------
+----
 By deafult the particles will follow your cursor (or finger on touch-screen devices). You can click to repel 
 the particles.
 
