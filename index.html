@@ -43,8 +43,9 @@
         };
 }());
 </script>
-<script src="math.js"></script>
-<script src="particles.js"></script>
+<script src="js/lib/Stats.js"></script>
+<script src="js/math.js"></script>
+<script src="js/particles.js"></script>
 <script>
 	$(function() {
 		var numParticles = 200;
@@ -56,7 +57,18 @@
 			numParticles = urlNumber;
 		}
 
-		ParticleCloud.init("mycanvas", numParticles);
+
+		var stats = new Stats();
+		stats.setMode(0);
+
+		// Align top-left
+		stats.domElement.style.position = 'absolute';
+		stats.domElement.style.left = '0px';
+		stats.domElement.style.top = '0px';
+
+		document.body.appendChild( stats.domElement );
+
+		ParticleCloud.init("mycanvas", numParticles, stats.begin, stats.end);
 	});
 </script>
 </body>

@@ -85,7 +85,7 @@ DEALINGS IN THE SOFTWARE.
 		}
 	}
 
-	ParticleCloud.init = function(canvasID, numberOfParticles) {
+	ParticleCloud.init = function(canvasID, numberOfParticles, beforeRenderCallback, afterRenderCallback) {
 
 		mycanvas = document.getElementById(canvasID);
 		context = mycanvas.getContext('2d');
@@ -136,7 +136,9 @@ DEALINGS IN THE SOFTWARE.
 
 		(function animate() {
 			requestAnimationFrame(animate);
+			if (typeof beforeRenderCallback === "function") beforeRenderCallback();
 			self.drawFrame();
+			if (typeof afterRenderCallback === "function") afterRenderCallback();
 		})();
 	}
 
