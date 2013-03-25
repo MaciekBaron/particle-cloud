@@ -19,9 +19,19 @@ interesting effect.
 
 The smaller particles travel slower which creates an illusion of 3D.
 
+Using the script
+----------------
+You can initialize the script by calling the following:
+
+     ParticleCloud.init(canvasID, numberOfParticles, beforeRenderCallback, afterRenderCallback)
+     
+`canvasId` is a string representing the `id` of the canvas in your HTML file, the rest of the arguments are optional 
+and are self-explainatory. The script expects the HTML file to only have a single canvas element as it resizes it to 
+fill the browser window, however this behaviour can be easily changed.
+
 Demo
 ----
-By deafult the particles will follow your cursor (or finger on touch-screen devices). You can click to repel 
+By default the particles will follow your cursor (or finger on touch-screen devices). You can click to repel 
 the particles.
 
 [Demo with 200 particles](http://htmlpreview.github.com/?http://github.com/MaciekBaron/particle-cloud/blob/master/index.html)
