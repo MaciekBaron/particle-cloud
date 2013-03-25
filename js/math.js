@@ -1,3 +1,4 @@
+// Author: http://github.com/Maksims
 // degree to radians coefficient
 var rd = Math.PI / 180.0;
 
