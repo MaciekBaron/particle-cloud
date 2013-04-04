@@ -44,3 +44,7 @@ the particles.
 
 [Demo with 10000 particles](http://htmlpreview.github.com/?http://github.com/MaciekBaron/particle-cloud/blob/master/index.html?10000) 
 (warning, can be really slow!)
+
+Licence
+-------
+MIT
