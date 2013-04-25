@@ -29,6 +29,8 @@ DEALINGS IN THE SOFTWARE.
 	var atr = 0.9; 			// Attraction rate
 	var vmax = 20; 			// Maximum velocity
 	var det = 1.2; 			// Detraction
+	var hitback_distance=10;// Distance at which we force the balls to go backwards drastically
+	var hitback_value = -5; // Value used to force the balls backwards
 
 	function Particle(px, py, psize, pid, pcolour) {
 		this.size = psize;
@@ -44,7 +46,7 @@ DEALINGS IN THE SOFTWARE.
 	function drawParticle(p) {
 		context.fillStyle = p.colour;
 		context.beginPath();
-		context.arc(p.pos[0],p.pos[1],p.size,0,Math.PI*2,true);
+		context.arc(p.pos[0], p.pos[1], p.size, 0, Math.PI*2, true);
 		context.closePath();
 		context.fill();
 	}
@@ -61,8 +63,8 @@ DEALINGS IN THE SOFTWARE.
 
 		p.dir = vec.rad();
 
-		if (distance < 5) {
-			p.v = -5;
+		if (distance < hitback_distance) {
+			p.v = hitback_value;
 		} else if (distance <= wellRadius) {
 			p.v -= det;
 			p.dir += Math.cos(p.id);
@@ -79,11 +81,30 @@ DEALINGS IN THE SOFTWARE.
 		context.clearRect(0, 0, mycanvas.width, mycanvas.height);
 
 		var i = numParticles;
+
 		while(i--) {
 			moveParticle(particleArray[i]);
 			drawParticle(particleArray[i]);
 		}
 	}
+
+	ParticleCloud.setAttraction = function(a) {
+		atr = +a;
+	}
+
+	ParticleCloud.setDetraction = function(d) {
+		det = +d;
+	}
+
+	ParticleCloud.setWellRadius = function(r) {
+		wellRadius = +r;
+	}
+
+	ParticleCloud.setMaxVelocity = function(mv) {
+		vmax = +mv;
+	}
+
+	ParticleCloud.setAttr
 
 	ParticleCloud.init = function(canvasID, numberOfParticles, beforeRenderCallback, afterRenderCallback) {
 
@@ -156,7 +177,9 @@ DEALINGS IN THE SOFTWARE.
 		var hex = c.toString(16);
 		return hex.length == 1 ? "0" + hex : hex;
 	}
+
 	function rgbToHex(r, g, b) {
 		return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 	}
+
 })(window.ParticleCloud = window.ParticleCloud || {}, jQuery, Vec2);
