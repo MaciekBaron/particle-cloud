@@ -34,15 +34,15 @@ Demo
 By default the particles will follow your cursor (or finger on touch-screen devices). You can click to repel 
 the particles.
 
-[Demo with 200 particles](http://htmlpreview.github.com/?http://github.com/MaciekBaron/particle-cloud/blob/master/index.html)
+[Demo with 200 particles](http://theycallmemagic.co.uk/demo/particles/index.html)
 
-[Demo with 500 particles](http://htmlpreview.github.com/?http://github.com/MaciekBaron/particle-cloud/blob/master/index.html?500)
+[Demo with 500 particles](http://theycallmemagic.co.uk/demo/particles/index.html?500)
 
-[Demo with 1000 particles](http://htmlpreview.github.com/?http://github.com/MaciekBaron/particle-cloud/blob/master/index.html?1000)
+[Demo with 1000 particles](http://theycallmemagic.co.uk/demo/particles/index.html?1000)
 
-[Demo with 2000 particles](http://htmlpreview.github.com/?http://github.com/MaciekBaron/particle-cloud/blob/master/index.html?2000)
+[Demo with 2000 particles](http://theycallmemagic.co.uk/demo/particles/index.html?2000)
 
-[Demo with 10000 particles](http://htmlpreview.github.com/?http://github.com/MaciekBaron/particle-cloud/blob/master/index.html?10000) 
+[Demo with 10000 particles](http://theycallmemagic.co.uk/demo/particles/index.html?10000) 
 (warning, can be really slow!)
 
 Licence
